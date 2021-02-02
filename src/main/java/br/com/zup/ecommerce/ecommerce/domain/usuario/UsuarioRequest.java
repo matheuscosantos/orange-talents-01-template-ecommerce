@@ -1,6 +1,6 @@
 package br.com.zup.ecommerce.ecommerce.domain.usuario;
 
-import br.com.zup.ecommerce.ecommerce.UniqueValue;
+import br.com.zup.ecommerce.ecommerce.config.validators.UniqueValue;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

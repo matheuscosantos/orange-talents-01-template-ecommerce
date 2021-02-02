@@ -1,6 +1,6 @@
 package br.com.zup.ecommerce.ecommerce.domain.usuario;
 
-import br.com.zup.ecommerce.ecommerce.UniqueValue;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -25,6 +25,8 @@ public class Usuario {
     @NotNull
     @Size(min = 6)
     private String senha;
+
+    @CreationTimestamp
     private LocalDateTime instante = LocalDateTime.now();
 
     public Usuario(@NotBlank @NotNull @Email String login,
