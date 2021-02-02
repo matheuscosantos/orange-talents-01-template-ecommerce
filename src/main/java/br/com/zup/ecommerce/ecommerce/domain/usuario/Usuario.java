@@ -1,5 +1,6 @@
 package br.com.zup.ecommerce.ecommerce.domain.usuario;
 
+import br.com.zup.ecommerce.ecommerce.UniqueValue;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -17,6 +18,7 @@ public class Usuario {
     @NotBlank
     @NotNull
     @Email
+    @Column(unique = true)
     private String login;
 
     @NotBlank
