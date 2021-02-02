@@ -1,4 +1,4 @@
-package br.com.zup.ecommerce.ecommerce;
+package br.com.zup.ecommerce.ecommerce.config.validators;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -10,12 +10,12 @@ import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Documented
-@Constraint(validatedBy = { UniqueValueValidator.class })
+@Constraint(validatedBy = { ExistsIdValidator.class })
 @Target({ FIELD })
 @Retention(RUNTIME)
-public @interface UniqueValue {
+public @interface ExistsId {
 
-    String message() default "O campo precisa ser único";
+    String message() default "O objeto deve existir no banco de dados.";
 
     Class<?>[] groups() default {};
 
