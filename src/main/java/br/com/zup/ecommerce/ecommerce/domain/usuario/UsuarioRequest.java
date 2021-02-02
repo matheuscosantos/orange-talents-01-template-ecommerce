@@ -1,5 +1,7 @@
 package br.com.zup.ecommerce.ecommerce.domain.usuario;
 
+import br.com.zup.ecommerce.ecommerce.UniqueValue;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -9,6 +11,7 @@ public class UsuarioRequest {
     @NotBlank
     @NotNull
     @Email
+    @UniqueValue(domainClass = Usuario.class, fieldName = "login")
     private String login;
 
     @NotBlank
