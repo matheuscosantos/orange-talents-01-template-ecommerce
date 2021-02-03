@@ -13,6 +13,10 @@ public class Caracteristica {
     private String nome;
     private String valor;
 
+    @Deprecated
+    public Caracteristica() {
+    }
+
     public Caracteristica(String nome, String valor) {
         this.nome = nome;
         this.valor = valor;

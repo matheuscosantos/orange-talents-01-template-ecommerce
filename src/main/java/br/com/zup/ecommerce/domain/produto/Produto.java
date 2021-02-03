@@ -1,6 +1,7 @@
 package br.com.zup.ecommerce.domain.produto;
 
 import br.com.zup.ecommerce.domain.categoria.Categoria;
+import br.com.zup.ecommerce.domain.usuario.Usuario;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -42,22 +43,33 @@ public class Produto {
     @ManyToOne
     private Categoria categoria;
 
+    @NotNull
+    @ManyToOne
+    private Usuario usuarioCriador;
+
     @CreationTimestamp
     private LocalDateTime instanteDoCadastro = LocalDateTime.now();
+
+    @Deprecated
+    public Produto() {
+    }
 
     public Produto(@NotBlank @NotNull String nome,
                    @Min(value = 0) BigDecimal valor,
                    @NotNull @Min(value = 0) Integer quantidadeDisponivel,
                    @Size(min = 3, max = 20) Set<Caracteristica> caracteristicas,
                    @NotBlank @Size(max = 1000) String descricao,
-                   @NotNull Categoria categoria) {
+                   @NotNull Categoria categoria,
+                   @NotNull Usuario usuarioCriador
+                   ) {
 
         Assert.isTrue(StringUtils.hasLength(nome), "O nome do produto é obrigatório.");
         Assert.isTrue(valor != null, "O valor do produto deve ser maior que R$00,00");
         Assert.isTrue(quantidadeDisponivel != null, "A quantidade do produto é obrigatório.");
         Assert.isTrue(quantidadeDisponivel >= 0, "A quantidade do produto deve ser maior que 0.");
         Assert.isTrue(caracteristicas.size() >= 3, "O produto deve ter 3 ou mais características.");
-        Assert.isTrue(StringUtils.hasLength(nome), "O produto deve pertencer a uma categoria.");
+        Assert.isTrue(categoria != null, "O produto deve pertencer a uma categoria.");
+        Assert.isTrue(usuarioCriador != null, "O produto deve ter um criador.");
 
         this.nome = nome;
         this.valor = valor;
@@ -65,6 +77,7 @@ public class Produto {
         this.caracteristicas = caracteristicas;
         this.descricao = descricao;
         this.categoria = categoria;
+        this.usuarioCriador = usuarioCriador;
     }
 
     public String getNome() {
@@ -93,5 +106,9 @@ public class Produto {
 
     public LocalDateTime getInstanteDoCadastro() {
         return instanteDoCadastro;
+    }
+
+    public Usuario getUsuarioCriador() {
+        return usuarioCriador;
     }
 }

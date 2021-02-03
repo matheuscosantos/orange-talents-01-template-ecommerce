@@ -56,9 +56,9 @@ public class Usuario implements UserDetails {
         return login;
     }
 
-    public String getSenha() {
-        return senha;
-    }
+//    public String getSenha() {
+//        return senha;
+//    }
 
     public Long getId() {
         return id;
