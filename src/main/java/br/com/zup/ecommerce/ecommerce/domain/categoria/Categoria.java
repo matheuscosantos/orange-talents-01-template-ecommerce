@@ -1,4 +1,4 @@
-package br.com.zup.ecommerce.ecommerce.domain;
+package br.com.zup.ecommerce.ecommerce.domain.categoria;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

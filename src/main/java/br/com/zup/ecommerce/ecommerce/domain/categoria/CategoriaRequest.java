@@ -1,4 +1,4 @@
-package br.com.zup.ecommerce.ecommerce.domain;
+package br.com.zup.ecommerce.ecommerce.domain.categoria;
 
 import br.com.zup.ecommerce.ecommerce.config.validators.ExistsId;
 import br.com.zup.ecommerce.ecommerce.config.validators.UniqueValue;

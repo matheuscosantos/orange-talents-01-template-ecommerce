@@ -1,6 +1,8 @@
 package br.com.zup.ecommerce.ecommerce.domain.usuario;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
@@ -8,9 +10,13 @@ import org.springframework.util.StringUtils;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
-public class Usuario {
+public class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
@@ -26,8 +32,15 @@ public class Usuario {
     @Size(min = 6)
     private String senha;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Perfil> perfis = new ArrayList<>();
+
     @CreationTimestamp
     private LocalDateTime instante = LocalDateTime.now();
+
+    @Deprecated
+    public Usuario() {
+    }
 
     public Usuario(@NotBlank @NotNull @Email String login,
                    @NotBlank @NotNull @Size(min = 6) String senha) {
@@ -46,4 +59,55 @@ public class Usuario {
         return senha;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.perfis;
+    }
+
+    @Override
+    public String getPassword() {
+        return this.senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return login.equals(usuario.login) && senha.equals(usuario.senha);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(login, senha);
+    }
 }
