@@ -1,4 +1,4 @@
-package br.com.zup.ecommerce.ecommerce.domain;
+package br.com.zup.ecommerce.ecommerce.domain.categoria;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

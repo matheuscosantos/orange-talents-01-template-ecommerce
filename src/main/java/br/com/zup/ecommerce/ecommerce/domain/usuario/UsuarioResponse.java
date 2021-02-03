@@ -10,4 +10,8 @@ public class UsuarioResponse {
     public String getLogin() {
         return login;
     }
+
+
+
+
 }
