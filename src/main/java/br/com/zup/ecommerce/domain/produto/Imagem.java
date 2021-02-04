@@ -32,4 +32,12 @@ public class Imagem {
         this.produto = produto;
         this.link = link;
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getLink() {
+        return link;
+    }
 }

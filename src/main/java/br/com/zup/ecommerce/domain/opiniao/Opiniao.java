@@ -56,6 +56,10 @@ public class Opiniao {
         this.produto = produto;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public Integer getNota() {
         return nota;
     }
