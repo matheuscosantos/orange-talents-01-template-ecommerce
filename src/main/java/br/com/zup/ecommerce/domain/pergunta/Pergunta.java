@@ -68,8 +68,14 @@ public class Pergunta {
     public Produto getProduto() {
         return produto;
     }
+
+    @Override
+    public String toString() {
+        return "Pergunta{" +
+                "titulo='" + titulo + '\'' +
+                ", instanteDeCriacao=" + instanteDeCriacao +
+                ", usuario=" + usuario +
+                ", produto=" + produto +
+                '}';
+    }
 }
-//
-//Necessidades
-//        O vendedor recebe um email com a pergunta nova e o link para a página de visualização do produto(ainda vai existir)
-//        o email não precisa ser de verdade. Pode ser apenas um print no console do servidor com o corpo.

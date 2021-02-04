@@ -7,6 +7,7 @@ import br.com.zup.ecommerce.domain.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -19,13 +20,15 @@ import java.util.List;
 public class PerguntaController {
 
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
 
     @Autowired
-    UsuarioRepository usuarioRepository;
+    private UsuarioRepository usuarioRepository;
 
     @Autowired
-    PerguntaRepository perguntaRepository;
+    private PerguntaRepository perguntaRepository;
+
+    private Emails email;
 
     @PostMapping(value = "/{idProduto}/pergunta")
     @Transactional
@@ -36,9 +39,15 @@ public class PerguntaController {
 
         Produto possivelProduto = em.find(Produto.class, idProduto);
         if(possivelProduto != null){
-            em.persist(request.toModel(usuarioLogado, possivelProduto));
+            Pergunta novaPergunta = request.toModel(usuarioLogado, possivelProduto);
+            em.persist(novaPergunta);
             List<Pergunta> perguntas = perguntaRepository.findAllByProdutoId(idProduto);
             PerguntasPorProdutoDTO dtos = new PerguntasPorProdutoDTO(perguntas);
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            new Emails().novaPergunta(novaPergunta);
+
             return ResponseEntity.ok(dtos);
         }
         return ResponseEntity.notFound().build();
