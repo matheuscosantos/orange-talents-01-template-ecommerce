@@ -80,6 +80,10 @@ public class Produto {
         this.usuarioCriador = usuarioCriador;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getNome() {
         return nome;
     }
