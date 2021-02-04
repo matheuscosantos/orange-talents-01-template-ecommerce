@@ -17,7 +17,7 @@ public class DetalhesDTO {
     private List<LinkImagemDTO> linksDTO = new ArrayList<>();
     private List<OpiniaoDTO> opinioesDTO = new ArrayList<>();
     private List<PerguntaDTO> perguntasDTO = new ArrayList<>();
-    private Double mediaDasNotas;
+    private OptionalDouble mediaDasNotas;
     private long totalDeNotas;
 
 
@@ -31,7 +31,11 @@ public class DetalhesDTO {
         opinioesDTO.addAll(opinioes.stream().map(OpiniaoDTO::new).collect(Collectors.toList()));
         perguntasDTO.addAll(perguntas.stream().map(PerguntaDTO::new).collect(Collectors.toList()));
         IntStream mapToInt = opinioes.stream().mapToInt(Opiniao::getNota);
-        mediaDasNotas = mapToInt.average().getAsDouble();
+        mediaDasNotas = mapToInt.average();
+        if(mediaDasNotas.isEmpty()){
+            mediaDasNotas = OptionalDouble.of(0);
+        }
+
         mapToInt = opinioes.stream().mapToInt(Opiniao::getNota);
         totalDeNotas = mapToInt.count();
     }
@@ -52,7 +56,7 @@ public class DetalhesDTO {
         return perguntasDTO;
     }
 
-    public Double getMediaDasNotas() {
+    public OptionalDouble getMediaDasNotas() {
         return mediaDasNotas;
     }
 
@@ -60,6 +64,3 @@ public class DetalhesDTO {
         return totalDeNotas;
     }
 }
-
-//Média de notas do produto
-//Número total de notas do produto
