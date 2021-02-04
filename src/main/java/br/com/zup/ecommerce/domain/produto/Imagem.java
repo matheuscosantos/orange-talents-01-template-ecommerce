@@ -1,5 +1,7 @@
 package br.com.zup.ecommerce.domain.produto;
 
+import org.springframework.util.Assert;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -23,6 +25,10 @@ public class Imagem {
 
     public Imagem(@NotNull Produto produto,
                   @NotNull String link) {
+
+        Assert.isTrue(produto != null, "O produto é obrigatório.");
+        Assert.isTrue(link != null, "O link é obrigatório.");
+
         this.produto = produto;
         this.link = link;
     }
