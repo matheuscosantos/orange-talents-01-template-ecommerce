@@ -29,7 +29,7 @@ public class Produto {
 
     @NotNull
     @Min(value = 0)
-    private Integer quantidadeDisponivel;
+    private Long quantidadeDisponivel;
 
     @Size(min = 3, max = 20)
     @OneToMany(cascade = CascadeType.ALL)
@@ -56,7 +56,7 @@ public class Produto {
 
     public Produto(@NotBlank @NotNull String nome,
                    @Min(value = 0) BigDecimal valor,
-                   @NotNull @Min(value = 0) Integer quantidadeDisponivel,
+                   @NotNull @Min(value = 0) Long quantidadeDisponivel,
                    @Size(min = 3, max = 20) Set<Caracteristica> caracteristicas,
                    @NotBlank @Size(max = 1000) String descricao,
                    @NotNull Categoria categoria,
@@ -80,6 +80,14 @@ public class Produto {
         this.usuarioCriador = usuarioCriador;
     }
 
+    public Boolean abateQuantidadeDaCompraNoEstoque(Long quantidadeSolicitada){
+        if(quantidadeDisponivel < quantidadeSolicitada){
+            return false;
+        }
+        this.quantidadeDisponivel = quantidadeDisponivel - quantidadeSolicitada;
+        return true;
+    }
+
     public Long getId() {
         return id;
     }
@@ -92,7 +100,7 @@ public class Produto {
         return valor;
     }
 
-    public Integer getQuantidadeDisponivel() {
+    public Long getQuantidadeDisponivel() {
         return quantidadeDisponivel;
     }
 
