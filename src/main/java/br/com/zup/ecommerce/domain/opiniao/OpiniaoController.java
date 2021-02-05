@@ -5,6 +5,7 @@ import br.com.zup.ecommerce.domain.usuario.Usuario;
 import br.com.zup.ecommerce.domain.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,14 +27,12 @@ public class OpiniaoController {
 
     @PostMapping(value = "/{idProduto}/opiniao")
     @Transactional
-    public ResponseEntity cria(@PathVariable Long idProduto, @RequestBody @Valid OpiniaoRequest request){
-
-        String emailDoUsuarioLogado = SecurityContextHolder.getContext().getAuthentication().getName();
-        Optional<Usuario> usuarioLogado = usuarioRepository.findByLogin(emailDoUsuarioLogado);
-
+    public ResponseEntity cria(@PathVariable Long idProduto,
+                               @RequestBody @Valid OpiniaoRequest request,
+                               @AuthenticationPrincipal Usuario usuarioLogado){
         Produto possivelProduto = em.find(Produto.class, idProduto);
         if(possivelProduto != null){
-            em.persist(request.toModel(em, usuarioLogado.get(), possivelProduto));
+            em.persist(request.toModel(em, usuarioLogado, possivelProduto));
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();

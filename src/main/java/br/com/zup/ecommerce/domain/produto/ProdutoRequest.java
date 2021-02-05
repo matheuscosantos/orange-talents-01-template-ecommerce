@@ -4,9 +4,9 @@ import br.com.zup.ecommerce.config.validators.ExistsId;
 import br.com.zup.ecommerce.domain.categoria.Categoria;
 import br.com.zup.ecommerce.domain.usuario.Usuario;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -28,7 +28,7 @@ public class ProdutoRequest {
     @NotNull
     @Min(value = 0)
     @JsonProperty
-    private Integer quantidadeDisponivel;
+    private Long quantidadeDisponivel;
 
     @Size(min = 3, max = 20)
     @JsonProperty
